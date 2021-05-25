@@ -1,0 +1,72 @@
+{
+  "name": "rollup-plugin-geojson",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Convert .geojson files to ES6 modules",
+  "license": "MIT",
+  "repository": {
+    "url": "n370/rollup-plugin-geojson"
+  },
+  "author": "Dylson Valente Neto <ama@n370.info> (https://n370.info/)",
+  "homepage": "https://github.com/n370/rollup-plugin-geojson/#readme",
+  "bugs": "https://github.com/n370/rollup-plugin-geojson/issues",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "scripts": {
+    "build": "rollup -c",
+    "ci:coverage": "nyc npm run test && nyc report --reporter=text-lcov > coverage.lcov",
+    "ci:lint": "npm run build && npm run lint",
+    "ci:lint:commits": "commitlint --from=${CIRCLE_BRANCH} --to=${CIRCLE_SHA1}",
+    "ci:test": "npm run test -- --verbose && npm run test:ts",
+    "prebuild": "del-cli dist",
+    "prepare": "npm run build",
+    "lint": "echo \"ok!\"",
+    "prepublishOnly": "npm run lint && npm run test",
+    "pretest": "npm run build",
+    "test": "ava",
+    "test:ts": "tsc types/index.d.ts test/types.ts --noEmit"
+  },
+  "files": [
+    "dist",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "rollup",
+    "plugin",
+    "geojson",
+    "es2015",
+    "npm",
+    "modules"
+  ],
+  "peerDependencies": {
+    "rollup": "^1.20.0 || ^2.0.0"
+  },
+  "dependencies": {
+    "@rollup/pluginutils": "^3.0.8"
+  },
+  "devDependencies": {
+    "@ava/babel": "1.0.1",
+    "@rollup/plugin-buble": "^0.21.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "ava": "3.15.0",
+    "del-cli": "3.0.1",
+    "rollup": "^2.23.0",
+    "source-map-support": "^0.5.19"
+  },
+  "types": "types/index.d.ts",
+  "ava": {
+    "babel": {
+      "compileEnhancements": false
+    },
+    "files": [
+      "!**/fixtures/**",
+      "!**/helpers/**",
+      "!**/recipes/**",
+      "!**/types.ts"
+    ]
+  }
+}
